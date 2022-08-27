@@ -27,14 +27,14 @@ def get_recipe(file_name):
 
     try:
         result =  next(search("site:taste.com.au {}".format(search_term), tld="co.in", num=1, stop=1, pause=1))
-        return result
+        return [search_term, result]
     except:
         response = client.label_detection(image=image)
         labels = response.label_annotations
         for label in labels:
             try:
                 result =  next(search("site:taste.com.au {}".format(search_term), tld="co.in", num=1, stop=1, pause=1))
-                return result
+                return [search_term, result]
             except:
                 continue
     return None
