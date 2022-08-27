@@ -24,6 +24,7 @@ def get_recipe(file_name):
     annotations = response.web_detection
 
     init_search_term = annotations.best_guess_labels[0].label
+    result = init_search_term
 
     try:
         result =  next(search("site:taste.com.au {}".format(init_search_term), tld="co.in", num=1, stop=1, pause=1))
