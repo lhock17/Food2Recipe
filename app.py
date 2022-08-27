@@ -33,8 +33,8 @@ def upload_file():
             file.save(file_path)
             # return redirect(url_for('upload_file', name=filename))
             recipe = get_recipe(file_path)
-            if not recipe[1]:
-                recipe = "Couldn't find a recipe"
+            # if not recipe[1]:
+            #     recipe = "Couldn't find a recipe"
             return recipe
     return '''
     <!doctype html>
