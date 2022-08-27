@@ -23,18 +23,18 @@ def get_recipe(file_name):
     response = client.web_detection(image=image)
     annotations = response.web_detection
 
-    search_term = annotations.best_guess_labels[0].label
+    init_search_term = annotations.best_guess_labels[0].label
 
     try:
-        result =  next(search("site:taste.com.au {}".format(search_term), tld="co.in", num=1, stop=1, pause=1))
-        return [search_term, result]
+        result =  next(search("site:taste.com.au {}".format(init_search_term), tld="co.in", num=1, stop=1, pause=1))
+        return [init_search_term, result]
     except:
         response = client.label_detection(image=image)
         labels = response.label_annotations
         for label in labels:
             try:
-                result =  next(search("site:taste.com.au {}".format(search_term), tld="co.in", num=1, stop=1, pause=1))
-                return [search_term, result]
+                result =  next(search("site:taste.com.au {}".format(label), tld="co.in", num=1, stop=1, pause=1))
+                return [label, result]
             except:
                 continue
-    return [None, None]
+    return [init_search_term, None]
