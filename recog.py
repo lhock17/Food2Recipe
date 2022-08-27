@@ -37,4 +37,4 @@ def get_recipe(file_name):
                 return [label, result]
             except:
                 continue
-    return [init_search_term, None]
+    return [init_search_term, 'Nothing here', result]
