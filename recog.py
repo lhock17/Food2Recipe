@@ -28,7 +28,7 @@ def get_recipe(file_name):
     result = "Not Found"
     
     try:
-        result = list(search("site:taste.com.au/recipes {}".format(search_term), tld="co.in", num=10, stop=10, pause=5))
+        result = list(search("site:taste.com.au/recipes {}".format(search_term), tld="co.in", num=10, stop=10, pause=1))
         result = [item for item in result if "taste.com.au/recipes/collections" not in item][0]
     except:
         response = client.label_detection(image=image)
@@ -36,7 +36,7 @@ def get_recipe(file_name):
         for label in labels:
             try:
                 print(label.description)
-                result = list(search("site:taste.com.au/recipes {}".format(label.description), tld="co.in", num=5, stop=5, pause=5))
+                result = list(search("site:taste.com.au/recipes {}".format(label.description), tld="co.in", num=5, stop=5, pause=1))
                 print(result)
                 result = [item for item in result if "taste.com.au/recipes/collections" not in item][0]
                 return "Searched for recipe for {}.\nRecipe: {}".format(label.description, result)
