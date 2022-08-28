@@ -1,6 +1,5 @@
 import io
 import os
-from time import sleep
 
 # Imports the Google Cloud client library
 from google.cloud import vision
