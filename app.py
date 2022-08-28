@@ -5,7 +5,7 @@ from recog import get_recipe
 from werkzeug.utils import secure_filename
 
 UPLOAD_FOLDER = 'images'
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -16,6 +16,7 @@ def allowed_file(filename):
 
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
+    print('method called')
     if request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:
