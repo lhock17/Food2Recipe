@@ -6,7 +6,7 @@ from time import sleep
 from google.cloud import vision
 from googlesearch import search
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "credentials.json"
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "google-credentials.json"
 
 # Instantiates a client
 client = vision.ImageAnnotatorClient()
