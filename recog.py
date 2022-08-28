@@ -1,5 +1,6 @@
 import io
 import os
+from time import sleep
 
 # Imports the Google Cloud client library
 from google.cloud import vision
@@ -9,9 +10,6 @@ os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "credentials.json"
 
 # Instantiates a client
 client = vision.ImageAnnotatorClient()
-
-# The name of the image file to annotate
-# file_name = 'images/0x0.jpeg'
 
 def get_recipe(file_name):
     # Loads the image into memory
@@ -23,19 +21,25 @@ def get_recipe(file_name):
     response = client.web_detection(image=image)
     annotations = response.web_detection
 
-    init_search_term = annotations.best_guess_labels[0].label
-    result = init_search_term
-
     try:
-        result =  next(search("site:taste.com.au {}".format(init_search_term), tld="co.in", num=1, stop=1, pause=1))
-        return [init_search_term, result]
+        search_term = annotations.best_guess_labels[0].label
+    except:
+        return "Bad File"
+    result = "Not Found"
+    
+    try:
+        result = list(search("site:taste.com.au/recipes {}".format(search_term), tld="co.in", num=10, stop=10, pause=5))
+        result = [item for item in result if "taste.com.au/recipes/collections" not in item][0]
     except:
         response = client.label_detection(image=image)
         labels = response.label_annotations
         for label in labels:
             try:
-                result =  next(search("site:taste.com.au {}".format(label), tld="co.in", num=1, stop=1, pause=1))
-                return [label, result]
+                print(label.description)
+                result = list(search("site:taste.com.au/recipes {}".format(label.description), tld="co.in", num=5, stop=5, pause=5))
+                print(result)
+                result = [item for item in result if "taste.com.au/recipes/collections" not in item][0]
+                return "Searched for recipe for {}.\nRecipe: {}".format(label.description, result)
             except:
                 continue
-    return [init_search_term, 'Nothing here', result]
+    return "Searched for recipe for {}.\nRecipe: {}".format(search_term, result)
